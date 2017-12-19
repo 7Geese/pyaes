@@ -53,6 +53,7 @@
 
 import copy
 import struct
+import sys
 
 __all__ = ["AES", "AESModeOfOperationCTR", "AESModeOfOperationCBC", "AESModeOfOperationCFB",
            "AESModeOfOperationECB", "AESModeOfOperationOFB", "AESModesOfOperation", "Counter"]
@@ -71,10 +72,7 @@ def _concat_list(a, b):
     return a + b
 
 
-# Python 3 compatibility
-try:
-    xrange
-except Exception:
+if sys.version_info[0] == 3:  # PY3
     xrange = range
 
     # Python 3 supports bytes, which is already an array of integers
