@@ -42,18 +42,20 @@ from .util import append_PKCS7_padding, strip_PKCS7_padding, to_bufferable
 #         stripping off padding
 #
 
-PADDING_NONE       = 'none'
-PADDING_DEFAULT    = 'default'
+PADDING_NONE = 'none'
+PADDING_DEFAULT = 'default'
 
 # @TODO: Ciphertext stealing and explicit PKCS#7
 # PADDING_CIPHERTEXT_STEALING
 # PADDING_PKCS7
+
 
 # ECB and CBC are block-only ciphers
 
 def _block_can_consume(self, size):
     if size >= 16: return 16
     return 0
+
 
 # After padding, we may have more than one block
 def _block_final_encrypt(self, data, padding = PADDING_DEFAULT):
@@ -83,10 +85,10 @@ def _block_final_decrypt(self, data, padding = PADDING_DEFAULT):
 
     raise Exception('invalid padding option')
 
+
 AESBlockModeOfOperation._can_consume = _block_can_consume
 AESBlockModeOfOperation._final_encrypt = _block_final_encrypt
 AESBlockModeOfOperation._final_decrypt = _block_final_decrypt
-
 
 
 # CFB is a segment cipher
