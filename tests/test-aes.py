@@ -21,24 +21,22 @@
 # THE SOFTWARE.
 
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import os
 import sys
-sys.path.append('../pyaes')
-
-from pyaes import *
-
-import os, time
-
-# Python 3 doesn't have xrange and returns bytes from urandom
-try:
-    xrange
-except NameError:
-    xrange = range
-else:
-    pass
+import time
 
 # compare against a known working implementation
 from Crypto.Cipher import AES as KAES
 from Crypto.Util import Counter as KCounter
+
+from pyaes import *
+
+sys.path.append('../pyaes')
+
+
+
 for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
 
     (tt_ksetup, tt_kencrypt, tt_kdecrypt) = (0.0, 0.0, 0.0)
@@ -47,12 +45,12 @@ for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
 
     for key_size in (128, 192, 256):
 
-        for test in xrange(1, 8):
+        for test in range(1, 8):
             key = os.urandom(key_size // 8)
 
             if mode == 'CBC':
                 iv = os.urandom(16)
-                plaintext = [ os.urandom(16) for x in xrange(0, test) ]
+                plaintext = [ os.urandom(16) for x in range(0, test) ]
 
                 t0 = time.time()
                 kaes = KAES.new(key, KAES.MODE_CBC, IV = iv)
@@ -66,7 +64,7 @@ for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
 
             elif mode == 'CFB':
                 iv = os.urandom(16)
-                plaintext = [ os.urandom(test * 5) for x in xrange(0, test) ]
+                plaintext = [ os.urandom(test * 5) for x in range(0, test) ]
 
                 t0 = time.time()
                 kaes = KAES.new(key, KAES.MODE_CFB, IV = iv, segment_size = test * 8)
@@ -79,7 +77,7 @@ for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
                 tt_setup += time.time() - t0
 
             elif mode == 'ECB':
-                plaintext = [ os.urandom(16) for x in xrange(0, test) ]
+                plaintext = [ os.urandom(16) for x in range(0, test) ]
 
                 t0 = time.time()
                 kaes = KAES.new(key, KAES.MODE_ECB)
@@ -93,7 +91,7 @@ for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
 
             elif mode == 'OFB':
                 iv = os.urandom(16)
-                plaintext = [ os.urandom(16) for x in xrange(0, test) ]
+                plaintext = [ os.urandom(16) for x in range(0, test) ]
 
                 t0 = time.time()
                 kaes = KAES.new(key, KAES.MODE_OFB, IV = iv)
@@ -110,7 +108,7 @@ for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
                 if test < 6:
                     plaintext = [ os.urandom(text_length) ]
                 else:
-                    plaintext = [ os.urandom(text_length) for x in xrange(0, test) ]
+                    plaintext = [ os.urandom(text_length) for x in range(0, test) ]
 
                 t0 = time.time()
                 kaes = KAES.new(key, KAES.MODE_CTR, counter = KCounter.new(128, initial_value = 0))
@@ -155,4 +153,3 @@ for mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:
     print("  Native better by: %dx" % better)
 
 print("All test cases passes!")
-

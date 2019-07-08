@@ -19,13 +19,18 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-
-import sys
-sys.path.append('../pyaes')
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import random
+import sys
+
+import pyaes
+from pyaes.blockfeeder import Decrypter, Encrypter
+from pyaes.util import to_bufferable
+
+sys.path.append('../pyaes')
+
 
 try:
     from StringIO import StringIO
@@ -33,10 +38,6 @@ except:
     import io
     StringIO = io.BytesIO
 
-import pyaes
-from pyaes.blockfeeder import Decrypter, Encrypter
-from pyaes import decrypt_stream, encrypt_stream
-from pyaes.util import to_bufferable
 
 
 key = os.urandom(32)

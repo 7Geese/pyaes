@@ -26,6 +26,8 @@
 # represent arbitrary binary data, we must use the "bytes" object. This method
 # ensures the object behaves as we need it to.
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import sys
 
 

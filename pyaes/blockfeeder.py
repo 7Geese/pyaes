@@ -21,9 +21,10 @@
 # THE SOFTWARE.
 
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from .aes import AESBlockModeOfOperation, AESSegmentModeOfOperation, AESStreamModeOfOperation
 from .util import append_PKCS7_padding, strip_PKCS7_padding, to_bufferable
-
 
 # First we inject three functions to each of the modes of operations
 #

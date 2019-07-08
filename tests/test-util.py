@@ -19,24 +19,23 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import sys
-sys.path.append('../pyaes')
 
 from pyaes.util import append_PKCS7_padding, strip_PKCS7_padding
+
+sys.path.append('../pyaes')
+
 
 byte = 'A'
 
 # Python 3 compatibility
-try:
-    xrange
-except Exception:
-    xrange = range
+if sys.version_info[0] >= 3:  # PY3
     # convert sample byte to bytes type, so that data = byte * i yields bytes, not str
     byte = bytes(byte, 'utf-8')
 
-for i in xrange(0, 17):
+for i in range(0, 17):
     data = byte * i
     padded = append_PKCS7_padding(data)
     print(repr(padded), strip_PKCS7_padding(padded) == data)

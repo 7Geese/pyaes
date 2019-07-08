@@ -45,9 +45,10 @@
 # Also useful, PyCrypto, a crypto library implemented in C with Python bindings:
 # https://www.dlitz.net/software/pycrypto/
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+from .aes import (AES, AESModeOfOperationCBC, AESModeOfOperationCFB, AESModeOfOperationCTR,
+                  AESModeOfOperationECB, AESModeOfOperationOFB, AESModesOfOperation, Counter)
+from .blockfeeder import PADDING_DEFAULT, PADDING_NONE, Decrypter, Encrypter, decrypt_stream, encrypt_stream
 
 VERSION = [1, 3, 0]
-
-from .aes import AES, AESModeOfOperationCTR, AESModeOfOperationCBC, AESModeOfOperationCFB, AESModeOfOperationECB, AESModeOfOperationOFB, AESModesOfOperation, Counter
-from .blockfeeder import decrypt_stream, Decrypter, encrypt_stream, Encrypter
-from .blockfeeder import PADDING_NONE, PADDING_DEFAULT
