@@ -153,7 +153,7 @@ class BlockFeeder(object):
         self._mode = mode
         self._feed = feed
         self._final = final
-        self._buffer = to_bufferable("")
+        self._buffer = to_bufferable(b"")
         self._padding = padding
 
     def feed(self, data = None):
@@ -176,7 +176,7 @@ class BlockFeeder(object):
         self._buffer += to_bufferable(data)
 
         # We keep 16 bytes around so we can determine padding
-        result = to_bufferable('')
+        result = to_bufferable(b'')
         while len(self._buffer) > 16:
             can_consume = self._mode._can_consume(len(self._buffer) - 16)
             if can_consume == 0: break

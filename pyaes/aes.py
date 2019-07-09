@@ -70,14 +70,14 @@ def _string_to_bytes(text):
 
 
 def _bytes_to_string(binary):
-    return "".join(chr(b) for b in binary)
+    return b"".join(chr(b) for b in binary)
 
 
 def _concat_list(a, b):
     return a + b
 
 
-if sys.version_info[0] == 3:  # PY3
+if sys.version_info[0] >= 3:  # PY3
     # Python 3 supports bytes, which is already an array of integers
     def _string_to_bytes(text):
         if isinstance(text, bytes):
@@ -390,7 +390,7 @@ class AESModeOfOperationCBC(AESBlockModeOfOperation):
         elif len(iv) != 16:
             raise ValueError('initialization vector must be 16 bytes')
         else:
-            self._last_cipherblock = iv
+            self._last_cipherblock = _string_to_bytes(iv)
 
         AESBlockModeOfOperation.__init__(self, key)
 
